@@ -2,5 +2,5 @@
   <rect width="512" height="512" fill="#0a0a0a"/>
   <defs><mask id="m"><rect width="512" height="512" fill="#fff"/><circle cx="318" cy="226" r="150" fill="#000"/></mask></defs>
   <circle cx="236" cy="272" r="170" fill="#fff" mask="url(#m)"/>
-  <path d="M388 96 L398 128 L430 138 L398 148 L388 180 L378 148 L346 138 L378 128 Z" fill="#f5a623"/>
+  <path d="M388 96 L398 128 L430 138 L398 148 L388 180 L378 148 L346 138 L378 128 Z" fill="#8fd3ff"/>
 </svg>
