@@ -1,4 +1,4 @@
-const CACHE = 'moonshot-v6';
+const CACHE = 'moonshot-v7';
 const PRECACHE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png', './icon.svg'];
 const FONT_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 
@@ -37,9 +37,10 @@ self.addEventListener('fetch', (e) => {
 
   if (req.mode === 'navigate') {
     e.respondWith(
-      caches.match(req, { ignoreSearch: true })
-        .then((hit) => hit || caches.match('./index.html'))
-        .then((hit) => hit || fetch(req))
+      fetch(req, { cache: 'no-store' }).then((res) => {
+        if (res && res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put('./index.html', copy)); }
+        return res;
+      }).catch(() => caches.match(req, { ignoreSearch: true }).then((hit) => hit || caches.match('./index.html')))
     );
     return;
   }
