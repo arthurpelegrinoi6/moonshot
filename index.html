@@ -357,7 +357,7 @@ var WEEKS=[
 ];
 
 var DAYS={
- seg:{name:"Superior A",focus:"costas pesado",cardio:"corrida leve 15–20 min",warm:"trunk",items:[
+ seg:{name:"Superior A",focus:"costas pesado",cardio:"caminhada inclinada 15–20 min",cd:"10–12% de inclinação, 5–5,5 km/h, sem segurar no corrimão",warm:"trunk",items:[
   {name:"Barra fixa com carga",tag:"âncora",s:4,r:"5–7",L:1,note:"Descanso 3 min. Progressão: comece com 2,5–5 kg no cinto. Quando fizer 4 × 7, sobe 1,25–2,5 kg."},
   {name:"Supino inclinado com halteres, banco a 30°",s:3,r:"6–10"},
   {name:"Remada na máquina com apoio no peito",s:3,r:"8–10",L:1},
@@ -372,7 +372,7 @@ var DAYS={
   {name:"Flexora sentada",s:3,r:"8–12",T:1,note:"A melhor para posterior de coxa segundo os estudos."},
   {name:"Panturrilha em pé",s:4,r:"8–12",T:1,note:"Pausa de 1 s embaixo."},
   {name:"Abdominal no cabo",s:3,r:"10–15",T:1}]},
- qua:{name:"Ombros e braços",focus:"",cardio:"corrida leve 15–20 min",warm:"trunk",items:[
+ qua:{name:"Ombros e braços",focus:"",cardio:"caminhada inclinada 15–20 min",cd:"10–12% de inclinação, 5–5,5 km/h, sem segurar no corrimão",warm:"trunk",items:[
   {name:"Elevação lateral na máquina",s:4,r:"10–15",L:1,T:1},
   {name:"Desenvolvimento na máquina",s:3,r:"6–10"},
   {name:"Crucifixo inverso na máquina",s:3,r:"12–20",T:1},
@@ -382,7 +382,7 @@ var DAYS={
   {name:"Tríceps na polia",s:2,r:"10–15",T:1},
   {name:"Elevação lateral com halteres",s:2,r:"15–20",L:1,note:"Finalizador."},
   {name:"Rosca inversa com barra W",s:2,r:"12–15",T:1,note:"Palma virada para baixo. Trabalha a parte de cima do antebraço."}]},
- qui:{name:"Superior B",focus:"largura das costas",cardio:"corrida leve 15–20 min",warm:"trunk",items:[
+ qui:{name:"Superior B",focus:"largura das costas",cardio:"caminhada inclinada 15–20 min",cd:"10–12% de inclinação, 5–5,5 km/h, sem segurar no corrimão",warm:"trunk",items:[
   {name:"Barra fixa só com o peso do corpo",s:2,r:"máximo",L:1,note:"Deixe 1 repetição sobrando."},
   {name:"Puxada na frente",s:3,r:"10–12",L:1,T:1,note:"Pegada que não incomoda o ombro."},
   {name:"Supino inclinado na máquina",s:3,r:"8–12",T:1},
@@ -555,7 +555,7 @@ function viewDay(day){
   if(d){
     h+=dayHead(day,i,d)+warmup(d.warm)+'<div class="exs">';
     d.items.forEach(function(it,ix){h+=exercise(it,ix,week,day,true)});
-    h+='</div><p class="after"><b>Depois</b>'+d.cardio+' + <a href="#flex">flexibilidade</a>.</p>'+feitoBlock(day);
+    h+='</div><p class="after"><b>Depois</b>'+d.cardio+(d.cd?' ('+d.cd+')':'')+' + <a href="#flex">flexibilidade</a>.</p>'+feitoBlock(day);
   }else if(day==="sab"){
     h+=dayHead(day,i,{name:"Atlético 1",focus:""})+'<div class="exs">';
     var forte=week>=3;
