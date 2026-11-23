@@ -213,7 +213,7 @@ body:not([data-t="visao"]) .banner{padding:14px}
 body:not([data-t="visao"]) .banner h2{font-size:clamp(28px,8vw,40px);margin-top:6px}
 body:not([data-t="visao"]) .banner .int{margin-top:6px}
 body:not([data-t="visao"]) .banner .pills{margin-top:10px}
-body:not([data-t="visao"]) .daytitle h2{font-size:clamp(34px,10vw,52px);margin-top:6px}
+body:not([data-t="visao"]) .daytitle h2{font-size:clamp(34px,10vw,52px);margin-top:0}
 /* visão */
 body:not([data-t="visao"]) .vonly{display:none}
 .top{justify-items:center;text-align:center}
@@ -267,6 +267,30 @@ body:not([data-t="visao"]) .vonly{display:none}
 .sq.ok{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
 .drow.isdone .dn{color:var(--ink-muted)}
 .wrap{padding-bottom:140px!important}
+/* tela do treino: sem abas, só o treino + voltar */
+.back{display:none}
+.tabs{display:none!important}
+body:not([data-day="1"]) .bar{display:none}
+body[data-day="1"] .top,body[data-day="1"] .weekrow{display:none!important}
+.more{display:grid;gap:8px;margin-top:4px}
+.mrow{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;padding:12px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);text-decoration:none}
+.mrow:hover{background:var(--card-hi)}
+.mrow b{font:700 15px/1.3 var(--sans);color:var(--ink)}
+.mrow span{font-size:13px;color:var(--ink-muted);text-align:right}
+body[data-day="1"] .bar{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:12px;padding-top:env(safe-area-inset-top,0px)}
+body[data-day="1"] .back{display:inline-flex;align-items:center;gap:6px;min-height:52px;padding-right:8px;text-decoration:none;font:700 13px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+body[data-day="1"] .back svg{margin-left:-4px}
+body[data-day="1"] .prog{padding:0;justify-items:end}
+body[data-day="1"] .prog-l{width:min(140px,100%)}
+body[data-day="1"] .panel{padding-top:20px}
+/* check por exercício */
+.log{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.xk{position:relative;display:block;margin-left:auto}
+.xk input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.xk span{display:flex;align-items:center;gap:8px;min-height:52px;padding:0 18px 0 14px;border-radius:12px;border:1.5px solid var(--line-strong);font:700 13px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);transition:background .15s,color .15s,border-color .15s,transform .1s}
+.xk input:active+span{transform:scale(.95)}
+.xk input:checked+span{background:#fff;border-color:#fff;color:#0a0a0a}
+.xk input:focus-visible+span{outline:2px solid var(--focus);outline-offset:3px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 .top,.panel,.exs,.days,.vol,.phases,.sel,.rules,.clear,.weekrow,.foot{grid-template-columns:minmax(0,1fr)}.warm,.note,.nm{overflow-wrap:anywhere}
 </style>
@@ -282,6 +306,7 @@ body:not([data-t="visao"]) .vonly{display:none}
   <div class="marq"><span>Moonshot</span></div>
 
   <nav class="bar" aria-label="Seções">
+    <a class="back" href="#visao" aria-label="Voltar para todos os treinos"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span id="backname">Moonshot</span></a>
     <div class="weekrow" id="weekrow" hidden>
       <div class="wks" id="wks" role="group" aria-label="Semana do bloco"></div>
       <div class="wkline" id="wkline"></div>
@@ -314,6 +339,7 @@ function sclear(prefix){
 }
 
 /* ---------- dados ---------- */
+var PROGRAM="Moonshot";
 var TABS=[["visao","Visão"],["seg","Superior A"],["ter","Pernas A"],["qua","Ombros"],["qui","Superior B"],["sex","Pernas B"],["sab","Atlético 1"],["dom","Atlético 2"],["regras","Regras"],["flex","Flex"]];
 var DAYKEYS=["seg","ter","qua","qui","sex","sab","dom"];
 var LONG={seg:"Segunda",ter:"Terça",qua:"Quarta",qui:"Quinta",sex:"Sexta",sab:"Sábado",dom:"Domingo"};
@@ -419,6 +445,12 @@ function checks(prefixId,w,day,n,count,wide,label){
   }
   return h;
 }
+/* um check por exercício (aceita também marcações antigas por série) */
+function exCheck(w,day,n,oldCount,name){
+  var k=key(w,day,n,"ok"),on=sget(k)==="1";
+  if(!on&&oldCount){on=true;for(var i=1;i<=oldCount;i++)if(sget(key(w,day,n,"c"+i))!=="1"){on=false;break}}
+  return '<label class="xk"><input type="checkbox" data-k="'+k+'" aria-label="Exercício feito: '+String(name).replace(/"/g,"")+'"'+(on?" checked":"")+'><span aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Feito</span></label>';
+}
 function kgField(prefixId,w,day,n,name){
   var v=sget(key(w,day,n,"kg"))||"";
   var prev=w>1?(sget(key(w-1,day,n,"kg"))||"").replace(/["<>&]/g,""):"";
@@ -439,7 +471,7 @@ function exercise(it,idx,w,day,useWeek){
   var h='<article class="card ex exg"><div class="ex-head"><span class="no">'+pad(n)+'</span><h3 class="nm">'+it.name+'</h3></div>';
   h+='<div class="ex-meta"><span class="sr"><em>Séries:</em> '+count+' × '+it.r+'</span>'+tags+'</div>';
   if(it.note)h+='<p class="note">'+it.note+'</p>';
-  h+='<div class="log">'+kgField(pid,wk,day,n,it.name)+'<div class="boxes">'+checks(pid,wk,day,n,count,false,"Série")+'</div></div></article>';
+  h+='<div class="log">'+(day==="flex"?'':kgField(pid,wk,day,n,it.name))+exCheck(wk,day,n,count,it.name)+'</div></article>';
   return h;
 }
 function feitoBlock(day){
@@ -467,7 +499,7 @@ function warmup(kind){
   return '<div class="warm"><span>Aquecimento</span>'+t+'</div>';
 }
 function dayHead(day,i,sub){
-  return '<div class="daytitle"><span class="label">Treino '+(i+1)+' de 7</span><h2>'+sub.name+(sub.focus?' <span class="dim">'+sub.focus+'</span>':'')+'</h2></div>';
+  return '<div class="daytitle"><h2>'+sub.name+(sub.focus?' <span class="dim">'+sub.focus+'</span>':'')+'</h2></div>';
 }
 
 /* ---------- visão ---------- */
@@ -496,6 +528,7 @@ function viewVisao(){
       h+='<a class="drow'+(ok?' isdone':'')+'" href="#'+k+'"><span class="sq'+(ok?' ok':'')+'">'+(ok?'<svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="Feito"><path d="M5 12.5l4.5 4.5L19 7"/></svg>':'<span class="ab">'+num+'</span>')+'</span><span class="dt"><span class="dn">'+dayName(k)+'</span><span class="dm">'+(ok&&durTxt(sget(doneKey(week,k)))?'Feito em '+durTxt(sget(doneKey(week,k))):dur)+'</span><span class="ds">'+sub+'</span></span></a>';
     });
     h+='</div>';
+  h+='<div class="more"><a class="mrow" href="#flex"><b>Flexibilidade</b><span>10 min no fim de todo treino</span></a><a class="mrow" href="#regras"><b>Regras</b><span>Progressão, descanso, técnica, joelho</span></a></div>';
   if(vtab==="geral"){
   h+='<section class="sect" id="periodo"><span class="label">Periodização</span><h2><span class="dim">Oito semanas,</span> quatro fases</h2>'+
    '<p class="lead">"Sobram X" quer dizer quantas repetições ainda caberiam antes da falha. Toque numa semana para usá-la.</p></section>';
@@ -504,7 +537,7 @@ function viewVisao(){
     h+='<button type="button" class="ph" data-week="'+(i+1)+'" aria-pressed="'+(week===i+1)+'"><span class="s">S'+(i+1)+'</span><span class="f">'+W.f+'</span><span class="i">'+W.i+'</span>'+(W.t?'<span class="t">'+W.t+'</span>':'<span class="t">&nbsp;</span>')+'</button>';
   });
   h+='</div>';
-  h+='<p class="small">Técnica, só em máquina e cabo. Veja como fazer em Regras.</p>';
+  h+='<p class="small">Técnica, só em máquina e cabo. Veja como fazer em <a class="gold" href="#regras">Regras</a>.</p>';
   h+='<section class="sect"><span class="label">Volume</span><h2><span class="dim">Séries por semana</span> em cada grupo</h2></section>';
   h+='<div class="card vol">';
   VOL.forEach(function(v){
@@ -528,10 +561,10 @@ function viewDay(day){
     var forte=week>=3;
     h+='<article class="card ex exg"><div class="ex-head"><span class="no">01</span><h3 class="nm">Corrida contínua</h3></div><div class="ex-meta"><span class="sr">30–40 min</span><span class="tag mute">ritmo de conversa</span>'+(forte?'<span class="tag">últimos 5 min fortes</span>':'')+'</div>'+
      '<p class="note">'+(forte?'Nesta semana, os últimos 5 min em ritmo forte.':'A partir da S3, os últimos 5 min em ritmo forte.')+'</p>'+
-     '<div class="log"><div class="boxes">'+checks("s"+week+"-sab-1",week,"sab",1,1,true,"Corrida concluída")+'</div></div></article>';
+     '<div class="log">'+exCheck(week,"sab",1,1,"Corrida contínua")+'</div></article>';
     h+='<article class="card ex exg"><div class="ex-head"><span class="no">02</span><h3 class="nm">Mobilidade longa</h3></div><div class="ex-meta"><span class="sr">2 × ~20 min</span></div>'+
      '<p class="note">Rotina de flexibilidade 2 vezes. Veja a aba <a class="gold" href="#flex">Flex</a>.</p>'+
-     '<div class="log"><div class="boxes">'+checks("s"+week+"-sab-2",week,"sab",2,2,false,"Rodada de mobilidade")+'</div></div></article></div>'+feitoBlock(day);
+     '<div class="log">'+exCheck(week,"sab",2,2,"Mobilidade longa")+'</div></article></div>'+feitoBlock(day);
   }else{
     var T=tirosFor(week);
     h+=dayHead(day,i,{name:"Atlético 2",focus:""});
@@ -539,7 +572,7 @@ function viewDay(day){
        '<div class="opt'+(!T.bike?" cur":"")+'"><span class="label">Semanas pares'+(!T.bike?" · esta semana":"")+'</span><div class="t">Esteira</div><div class="d">6 × 1 min forte, 2 min caminhando. Só em linha reta.</div></div></div>';
     h+='<article class="card ex"><span class="label">S'+week+' · '+(T.bike?"bike":"esteira")+'</span><div class="tiros" style="margin-top:10px">'+T.n+' <span class="dim" style="font-size:18px;letter-spacing:0">tiros</span></div>'+
      '<p class="note" style="margin-left:0">Um tiro a mais por semana. Na S5 volta à base.</p>'+
-     '<div class="log" style="margin-left:0"><div class="boxes">'+checks("s"+week+"-dom-1",week,"dom",1,T.n,false,"Tiro")+'</div></div></article>';
+     '<div class="log" style="margin-left:0">'+exCheck(week,"dom",1,T.n,"Tiros")+'</div></article>';
     h+='<p class="after"><b>Depois</b>rotina de <a href="#flex">flexibilidade</a>.</p>'+feitoBlock(day);
   }
   return h;
@@ -585,7 +618,7 @@ function updateProgress(){
   var isDay=DAYKEYS.indexOf(cur)>=0&&total>0;
   pg.classList.toggle("on",isDay);
   if(isDay){
-    $("prog-t").innerHTML='<b>'+done+'</b> de '+total+' exercícios';
+    $("prog-t").innerHTML='<b>'+done+'</b> de '+total+(total===1?' exercício':' exercícios');
     $("prog-i").style.width=(done/total*100)+"%";
   }
 
@@ -631,6 +664,7 @@ function show(id,animate){
   $("weekrow").hidden=DAYKEYS.indexOf(id)<0;
   renderWeekBar();
   document.body.setAttribute("data-t",id);
+  document.body.setAttribute("data-day",id!=="visao"?"1":"0");
   var cta=$("cta");cta.hidden=id!=="visao";
   updateProgress();
   if(id==="visao"){
@@ -698,7 +732,8 @@ document.addEventListener("click",function(e){
 document.addEventListener("change",function(e){
   var el=e.target;
   if(el&&el.type==="checkbox"&&el.getAttribute("data-k")){
-    if(el.checked)sset(el.getAttribute("data-k"),"1");else sdel(el.getAttribute("data-k"));
+    var dk2=el.getAttribute("data-k");
+    if(el.checked)sset(dk2,"1");else{sdel(dk2);if(/:ok$/.test(dk2)){var base=dk2.slice(0,-2);for(var ci=1;ci<=20;ci++)sdel(base+"c"+ci)}}
     updateProgress();
   }
 });
@@ -710,6 +745,7 @@ document.addEventListener("input",function(e){
   }
 });
 
+$("backname").textContent=PROGRAM;$("backname").parentNode.setAttribute("aria-label","Voltar para "+PROGRAM);
 route();
 })();
 </script>
