@@ -373,15 +373,14 @@ var DAYS={
   {name:"Panturrilha em pé",s:4,r:"8–12",T:1,note:"Pausa de 1 s embaixo."},
   {name:"Abdominal no cabo",s:3,r:"10–15",T:1}]},
  qua:{name:"Ombros e braços",focus:"",cardio:"caminhada inclinada 15–20 min",cd:"10–12% de inclinação, 5–5,5 km/h, sem segurar no corrimão",warm:"trunk",items:[
-  {name:"Elevação lateral na máquina",s:4,r:"10–15",L:1,T:1},
-  {name:"Desenvolvimento na máquina",s:3,r:"6–10"},
+  {name:"Desenvolvimento na máquina",s:3,r:"6–10",note:"Primeiro do dia: é onde dá para pôr mais carga."},
+  {name:"Elevação lateral na máquina",s:5,r:"10–15",L:1,T:1,note:"5 séries: entrou no lugar da elevação lateral com halteres que fechava o treino."},
+  {name:"Elevação frontal no cabo, um braço por vez",s:3,r:"10–15",T:1,note:"De costas para a polia baixa, cabo passando entre as pernas. Sobe até a linha do ombro. O cabo puxa o braço para trás, então o ombro da frente trabalha esticado."},
   {name:"Crucifixo inverso na máquina",s:3,r:"12–20",T:1},
-  {name:"Rosca inclinada com halteres",s:3,r:"8–12"},
+  {name:"Rosca inclinada com halteres",s:3,r:"8–12",note:"Banco a 45°, braço solto para trás. É a rosca que mais estica o bíceps."},
   {name:"Tríceps acima da cabeça no cabo",s:3,r:"8–12",T:1},
-  {name:"Rosca Scott",s:2,r:"10–12",T:1},
-  {name:"Tríceps na polia",s:2,r:"10–15",T:1},
-  {name:"Elevação lateral com halteres",s:2,r:"15–20",L:1,note:"Finalizador."},
-  {name:"Rosca inversa com barra W",s:2,r:"12–15",T:1,note:"Palma virada para baixo. Trabalha a parte de cima do antebraço."}]},
+  {name:"Rosca inversa com barra W",tag:"bi-set",s:2,r:"12–15",T:1,note:"Palma virada para baixo: bíceps e antebraço juntos. Bi-set com o próximo, sem descanso entre os dois. Descanso de 60–90 s depois da dupla."},
+  {name:"Tríceps na polia",tag:"bi-set",s:2,r:"10–15",T:1,note:"Na última volta, tira ~30% da carga nos dois e vai até não sair mais nenhuma."}]},
  qui:{name:"Superior B",focus:"largura das costas",cardio:"caminhada inclinada 15–20 min",cd:"10–12% de inclinação, 5–5,5 km/h, sem segurar no corrimão",warm:"trunk",items:[
   {name:"Barra fixa só com o peso do corpo",s:2,r:"máximo",L:1,note:"Deixe 1 repetição sobrando."},
   {name:"Puxada na frente",s:3,r:"10–12",L:1,T:1,note:"Pegada que não incomoda o ombro."},
@@ -398,6 +397,13 @@ var DAYS={
   {name:"Panturrilha sentado",s:3,r:"12–15",T:1},
   {name:"Elevação de pernas pendurado",s:3,r:"10–15"}]}
 };
+var SAB=[
+ {name:"Barra fixa só com o peso do corpo",tag:"par",s:3,r:"máximo",L:1,k:11,note:"Alterna com as paralelas: barra, 90 s, paralelas, 90 s. Deixe 2 repetições sobrando para chegar inteiro na segunda."},
+ {name:"Paralelas",tag:"par",s:3,r:"8–12",k:12,note:"Tronco levemente inclinado para frente. Deixe 2 repetições sobrando."},
+ {name:"Abdominal declinado com anilha",s:3,r:"10–15",T:1,k:13,note:"Parte de cima do abdômen. Enrola a coluna, não só sobe o tronco. Desce até esticar o abdômen."},
+ {name:"Abdominal reverso no banco",s:3,r:"10–15",k:14,note:"Parte de baixo. Joelhos dobrados, tira o quadril do banco e traz em direção ao peito. Desce devagar."},
+ {name:"Abdominal bicicleta, lento",s:3,r:"12 cada lado",k:15,note:"Laterais (oblíquos). Ombro em direção ao joelho oposto, 1 s parado em cada lado. Deitado: o joelho não gira com carga."}
+];
 var FLEX=[
  {name:"Posterior de coxa deitado, com faixa ou toalha",s:3,r:"30 s cada perna"},
  {name:"Flexor do quadril, ajoelhado",s:2,r:"30 s cada lado"},
@@ -405,7 +411,7 @@ var FLEX=[
  {name:"Pendurado na barra (dorsal e ombro)",s:2,r:"30 s"},
  {name:"Extensão do joelho com calcanhar apoiado, perna relaxada",s:2,r:"1 min",note:"Para chegar à cirurgia com o joelho esticando por completo."}
 ];
-var VOL=[["Ombro lateral","~18",18],["Costas","~18",18],["Peito","~12",12],["Bíceps","14–16",16],["Tríceps","12–14",14],["Quadríceps","10–13",13],["Posterior de coxa","10–13",13]];
+var VOL=[["Ombro lateral","~18",18],["Costas","~21",20],["Peito","~15",15],["Bíceps","12–14",14],["Tríceps","15–17",17],["Quadríceps","10–13",13],["Posterior de coxa","10–13",13]];
 
 /* ---------- estado ---------- */
 var week=1;
@@ -458,7 +464,7 @@ function kgField(prefixId,w,day,n,name){
 }
 function exercise(it,idx,w,day,useWeek){
   var wk=useWeek?w:0;
-  var n=idx+1, count=setsFor(it,w);
+  var n=it.k||idx+1, shown=idx+1, count=setsFor(it,w);
   if(!useWeek)count=it.s;
   var pid=(useWeek?"s"+w:"s0")+"-"+day+"-"+n;
   var tags="";
@@ -468,7 +474,7 @@ function exercise(it,idx,w,day,useWeek){
   }
   if(it.J)tags+='<span class="tag knee">joelho: sobram 2 sempre</span>';
   if(it.tag)tags+='<span class="tag mute">'+it.tag+'</span>';
-  var h='<article class="card ex exg"><div class="ex-head"><span class="no">'+pad(n)+'</span><h3 class="nm">'+it.name+'</h3></div>';
+  var h='<article class="card ex exg"><div class="ex-head"><span class="no">'+pad(shown)+'</span><h3 class="nm">'+it.name+'</h3></div>';
   h+='<div class="ex-meta"><span class="sr"><em>Séries:</em> '+count+' × '+it.r+'</span>'+tags+'</div>';
   if(it.note)h+='<p class="note">'+it.note+'</p>';
   h+='<div class="log">'+(day==="flex"?'':kgField(pid,wk,day,n,it.name))+exCheck(wk,day,n,count,it.name)+'</div></article>';
@@ -504,7 +510,7 @@ function dayHead(day,i,sub){
 
 /* ---------- visão ---------- */
 var vtab="dias";
-var DUR={sab:"40–60 min",dom:"30–40 min"};
+var DUR={sab:"75–90 min",dom:"30–40 min"};
 var ICO={sab:'<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="14" cy="4.5" r="2"/><path d="M8 21l3-6 3 2 2 4M11 15l-1-4 4-2 3 3h3M8 11l2-3"/></svg>',dom:'<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>'};
 function todayKey(){var map=["dom","seg","ter","qua","qui","sex","sab"];return map[new Date().getDay()]}
 function dayName(k){var d=DAYS[k];return d?d.name:(k==="sab"?"Atlético 1":"Atlético 2")}
@@ -522,7 +528,7 @@ function viewVisao(){
     DAYKEYS.forEach(function(k){
       var d=DAYS[k],sub,dur=d?"60–75 min":DUR[k];
       if(d){sub=(d.focus?d.focus+" · ":"")+"Aeróbico: "+d.cardio}
-      else if(k==="sab"){sub="Corrida contínua"}
+      else if(k==="sab"){sub="Barra, paralelas, abdômen e corrida"}
       else{sub="Tiros"}
       var ok=isDone(week,k),num=pad(DAYKEYS.indexOf(k)+1);
       h+='<a class="drow'+(ok?' isdone':'')+'" href="#'+k+'"><span class="sq'+(ok?' ok':'')+'">'+(ok?'<svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="Feito"><path d="M5 12.5l4.5 4.5L19 7"/></svg>':'<span class="ab">'+num+'</span>')+'</span><span class="dt"><span class="dn">'+dayName(k)+'</span><span class="dm">'+(ok&&durTxt(sget(doneKey(week,k)))?'Feito em '+durTxt(sget(doneKey(week,k))):dur)+'</span><span class="ds">'+sub+'</span></span></a>';
@@ -559,10 +565,11 @@ function viewDay(day){
   }else if(day==="sab"){
     h+=dayHead(day,i,{name:"Atlético 1",focus:""})+'<div class="exs">';
     var forte=week>=3;
-    h+='<article class="card ex exg"><div class="ex-head"><span class="no">01</span><h3 class="nm">Corrida contínua</h3></div><div class="ex-meta"><span class="sr">30–40 min</span><span class="tag mute">ritmo de conversa</span>'+(forte?'<span class="tag">últimos 5 min fortes</span>':'')+'</div>'+
+    SAB.forEach(function(it,ix){h+=exercise(it,ix,week,day,true)});
+    h+='<article class="card ex exg"><div class="ex-head"><span class="no">'+pad(SAB.length+1)+'</span><h3 class="nm">Corrida contínua</h3></div><div class="ex-meta"><span class="sr">30–40 min</span><span class="tag mute">ritmo de conversa</span>'+(forte?'<span class="tag">últimos 5 min fortes</span>':'')+'</div>'+
      '<p class="note">'+(forte?'Nesta semana, os últimos 5 min em ritmo forte.':'A partir da S3, os últimos 5 min em ritmo forte.')+'</p>'+
      '<div class="log">'+exCheck(week,"sab",1,1,"Corrida contínua")+'</div></article>';
-    h+='<article class="card ex exg"><div class="ex-head"><span class="no">02</span><h3 class="nm">Mobilidade longa</h3></div><div class="ex-meta"><span class="sr">2 × ~20 min</span></div>'+
+    h+='<article class="card ex exg"><div class="ex-head"><span class="no">'+pad(SAB.length+2)+'</span><h3 class="nm">Mobilidade longa</h3></div><div class="ex-meta"><span class="sr">2 × ~20 min</span></div>'+
      '<p class="note">Rotina de flexibilidade 2 vezes. Veja a aba <a class="gold" href="#flex">Flex</a>.</p>'+
      '<div class="log">'+exCheck(week,"sab",2,2,"Mobilidade longa")+'</div></article></div>'+feitoBlock(day);
   }else{
