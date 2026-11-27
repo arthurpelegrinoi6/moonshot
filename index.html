@@ -353,7 +353,7 @@ var WEEKS=[
  {f:"Descarga",i:"sobram 3",t:"Metade das séries, mesma carga.",short:"sobram 3"},
  {f:"Choque",i:"sobra 1",t:"+1 série em ombro lateral e costas.",short:"sobra 1"},
  {f:"Choque",i:"sobram 0–1",t:"+1 série nas prioridades + técnica.",short:"sobram 0–1"},
- {f:"Pico",i:"falha nos isolados",t:"Falha nos isolados + técnica. Depois, troca de programa.",short:"falha nos isolados"}
+ {f:"Pico",i:"falha nos isolados",t:"Falha nos isolados + técnica. Depois, 1 semana leve e troca de programa.",short:"falha nos isolados"}
 ];
 
 var DAYS={
@@ -362,7 +362,7 @@ var DAYS={
   {name:"Supino inclinado com halteres, banco a 30°",s:3,r:"6–10"},
   {name:"Remada na máquina com apoio no peito",s:3,r:"8–10",L:1},
   {name:"Crucifixo no cabo",s:2,r:"10–15",T:1},
-  {name:"Elevação lateral na máquina",s:4,r:"10–15",L:1,T:1},
+  {name:"Elevação lateral na máquina",s:4,r:"10–15",L:1,T:1,D:1},
   {name:"Tríceps acima da cabeça no cabo",tag:"bi-set",s:4,r:"12–15",T:1,note:"Bi-set com o próximo: faz este e emenda na rosca martelo, sem descanso. Descanso de 60–90 s depois da dupla."},
   {name:"Rosca martelo na corda",tag:"bi-set",s:4,r:"12–15",T:1,note:"Mesma estação de cabo. Pega bíceps e antebraço. Da semana 4 em diante, a última volta dos dois é com redução de carga (tira ~30% e continua)."}]},
  ter:{name:"Pernas A",focus:"quadríceps",cardio:"bike leve 15 min",warm:"bike",items:[
@@ -374,9 +374,9 @@ var DAYS={
   {name:"Abdominal no cabo",s:3,r:"10–15",T:1}]},
  qua:{name:"Ombros e braços",focus:"",cardio:"caminhada inclinada 15–20 min",cd:"10–12% de inclinação, 5–5,5 km/h, sem segurar no corrimão",warm:"trunk",items:[
   {name:"Desenvolvimento na máquina",s:3,r:"6–10",note:"Primeiro do dia: é onde dá para pôr mais carga."},
-  {name:"Elevação lateral na máquina",s:5,r:"10–15",L:1,T:1,note:"5 séries: entrou no lugar da elevação lateral com halteres que fechava o treino."},
+  {name:"Elevação lateral na máquina",s:5,r:"10–15",L:1,T:1,D:1,note:"5 séries: entrou no lugar da elevação lateral com halteres que fechava o treino."},
   {name:"Elevação frontal no cabo, um braço por vez",s:3,r:"10–15",T:1,note:"De costas para a polia baixa, cabo passando entre as pernas. Sobe até a linha do ombro. O cabo puxa o braço para trás, então o ombro da frente trabalha esticado."},
-  {name:"Crucifixo inverso na máquina",s:3,r:"12–20",T:1},
+  {name:"Crucifixo inverso na máquina",s:3,r:"12–20",T:1,D:1},
   {name:"Rosca inclinada com halteres",s:3,r:"8–12",note:"Banco a 45°, braço solto para trás. É a rosca que mais estica o bíceps."},
   {name:"Tríceps acima da cabeça no cabo",s:3,r:"8–12",T:1},
   {name:"Rosca inversa com barra W",tag:"bi-set",s:2,r:"12–15",T:1,note:"Palma virada para baixo: bíceps e antebraço juntos. Bi-set com o próximo, sem descanso entre os dois. Descanso de 60–90 s depois da dupla."},
@@ -398,12 +398,13 @@ var DAYS={
   {name:"Elevação de pernas pendurado",s:3,r:"10–15"}]}
 };
 var SAB=[
- {name:"Barra fixa só com o peso do corpo",tag:"par",s:3,r:"máximo",L:1,k:11,note:"Alterna com as paralelas: barra, 90 s, paralelas, 90 s. Deixe 2 repetições sobrando para chegar inteiro na segunda."},
- {name:"Paralelas",tag:"par",s:3,r:"8–12",k:12,note:"Tronco levemente inclinado para frente. Deixe 2 repetições sobrando."},
+ {name:"Desafio: 40 barras no menor tempo",tag:"desafio",s:1,r:"40 no total",L:1,k:17,f:"min",note:"Só com o peso do corpo. Quantas séries precisar, descanso livre, cronômetro rodando do início ao fim. Anota o tempo e tenta bater na semana seguinte. Na S5, semana leve: 20 barras, sem cronômetro."},
+ {name:"Paralelas",s:3,r:"8–12",k:12,note:"Depois do desafio. Tronco levemente inclinado para frente, 90 s de descanso. Deixe 2 repetições sobrando."},
  {name:"Abdominal declinado com anilha",s:3,r:"10–15",T:1,k:13,note:"Parte de cima do abdômen. Enrola a coluna, não só sobe o tronco. Desce até esticar o abdômen."},
  {name:"Abdominal reverso no banco",s:3,r:"10–15",k:14,note:"Parte de baixo. Joelhos dobrados, tira o quadril do banco e traz em direção ao peito. Desce devagar."},
  {name:"Abdominal bicicleta, lento",s:3,r:"12 cada lado",k:15,note:"Laterais (oblíquos). Ombro em direção ao joelho oposto, 1 s parado em cada lado. Deitado: o joelho não gira com carga."}
 ];
+var TESTE={name:"Teste: barra máxima",tag:"teste",s:1,r:"máximo",k:16,f:"reps",note:"Antes do desafio. 1 série com o peso do corpo, até não sair mais nenhuma, subindo até o queixo passar da barra. Anota as repetições: na S8 você refaz e compara com a S2."};
 var FLEX=[
  {name:"Posterior de coxa deitado, com faixa ou toalha",s:3,r:"30 s cada perna"},
  {name:"Flexor do quadril, ajoelhado",s:2,r:"30 s cada lado"},
@@ -430,9 +431,8 @@ function setsFor(it,w){
   return n;
 }
 function tirosFor(w){
-  var bike=w%2===1,base=bike?8:6,n;
-  var t={1:8,3:9,5:8,7:10,2:6,4:7,6:7,8:8};n=t[w];
-  return {bike:bike,n:n};
+  var t={1:2,2:2,3:2,4:3,5:1,6:3,7:3,8:3};
+  return {n:t[w]};
 }
 function tecnicaOn(w){return w===4||w===7||w===8}
 function doneKey(w,day){return "b1:s"+w+":"+day+":done"}
@@ -457,10 +457,11 @@ function exCheck(w,day,n,oldCount,name){
   if(!on&&oldCount){on=true;for(var i=1;i<=oldCount;i++)if(sget(key(w,day,n,"c"+i))!=="1"){on=false;break}}
   return '<label class="xk"><input type="checkbox" data-k="'+k+'" aria-label="Exercício feito: '+String(name).replace(/"/g,"")+'"'+(on?" checked":"")+'><span aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Feito</span></label>';
 }
-function kgField(prefixId,w,day,n,name){
+function kgField(prefixId,w,day,n,name,unit){
+  var u=unit||"kg",uLab=u==="kg"?"Carga em kg":(u==="min"?"Tempo em minutos":"Repetições");
   var v=sget(key(w,day,n,"kg"))||"";
   var prev=w>1?(sget(key(w-1,day,n,"kg"))||"").replace(/["<>&]/g,""):"";
-  return '<label class="kg" for="kg-'+prefixId+'">kg <input type="text" inputmode="decimal" autocomplete="off" maxlength="7" id="kg-'+prefixId+'" data-k="'+key(w,day,n,"kg")+'" value="'+v.replace(/"/g,"")+'"'+(prev?' placeholder="'+prev+'"':'')+' aria-label="Carga em kg: '+name.replace(/"/g,"")+(prev?'. Semana anterior: '+prev+' kg':'')+'">'+(prev?'<span class="prevkg">S'+(w-1)+': '+prev+' kg</span>':'')+'</label>';
+  return '<label class="kg" for="kg-'+prefixId+'">'+u+' <input type="text" inputmode="decimal" autocomplete="off" maxlength="7" id="kg-'+prefixId+'" data-k="'+key(w,day,n,"kg")+'" value="'+v.replace(/"/g,"")+'"'+(prev?' placeholder="'+prev+'"':'')+' aria-label="'+uLab+': '+name.replace(/"/g,"")+(prev?'. Semana anterior: '+prev+' '+u:'')+'">'+(prev?'<span class="prevkg">S'+(w-1)+': '+prev+' '+u+'</span>':'')+'</label>';
 }
 function exercise(it,idx,w,day,useWeek){
   var wk=useWeek?w:0;
@@ -470,14 +471,16 @@ function exercise(it,idx,w,day,useWeek){
   var tags="";
   if(useWeek){
     if((w===6||w===7)&&it.L)tags+='<span class="tag plus">+1 série</span>';
-    if(tecnicaOn(w)&&it.T)tags+='<span class="tag">técnica</span>';
+    if(tecnicaOn(w)&&it.D)tags+='<span class="tag">drop triplo</span>';
+    else if(tecnicaOn(w)&&it.T)tags+='<span class="tag">técnica</span>';
   }
   if(it.J)tags+='<span class="tag knee">joelho: sobram 2 sempre</span>';
   if(it.tag)tags+='<span class="tag mute">'+it.tag+'</span>';
   var h='<article class="card ex exg"><div class="ex-head"><span class="no">'+pad(shown)+'</span><h3 class="nm">'+it.name+'</h3></div>';
   h+='<div class="ex-meta"><span class="sr"><em>Séries:</em> '+count+' × '+it.r+'</span>'+tags+'</div>';
   if(it.note)h+='<p class="note">'+it.note+'</p>';
-  h+='<div class="log">'+(day==="flex"?'':kgField(pid,wk,day,n,it.name))+exCheck(wk,day,n,count,it.name)+'</div></article>';
+  if(useWeek&&tecnicaOn(w)&&it.D)h+='<p class="note"><b class="gold" style="font-weight:500">Drop triplo na última série:</b> vai até falhar, tira 10–20% da carga e continua até falhar de novo. Repete 3 vezes, sem descanso.</p>';
+  h+='<div class="log">'+(day==="flex"?'':kgField(pid,wk,day,n,it.name,it.f))+exCheck(wk,day,n,count,it.name)+'</div></article>';
   return h;
 }
 function feitoBlock(day){
@@ -496,7 +499,7 @@ function banner(w){
   if(w===6||w===7)p+='<span class="pill">+1 série: ombro lateral e costas</span>';
   if(tecnicaOn(w))p+='<span class="pill">técnica nos isolados de máquina e cabo</span>';
   if(w===8)p+='<span class="pill">falha nos isolados</span>';
-  var extra=w===4?"Técnica só na última série dos isolados.":(w===8?"Depois desta semana, troca de programa.":(W.t&&w!==8&&w!==4?W.t:""));
+  var extra=w===4?"Técnica só na última série dos isolados.":(w===8?"Depois desta semana: 1 semana leve (metade das séries, sobrando 3) e só então o próximo programa. Refaça o teste de barra no sábado.":(W.t&&w!==8&&w!==4?W.t:""));
   return '<section class="card banner"><span class="label">Semana '+w+' de 8 · '+W.f+'</span><h2>S'+w+' <span class="dim">'+W.f+'</span></h2>'+
    '<p class="int">Intensidade: '+W.i+'</p>'+(p?'<div class="pills">'+p+'</div>':'')+(extra?'<p class="small">'+extra+'</p>':'')+'</section>';
 }
@@ -510,7 +513,7 @@ function dayHead(day,i,sub){
 
 /* ---------- visão ---------- */
 var vtab="dias";
-var DUR={sab:"75–90 min",dom:"30–40 min"};
+var DUR={sab:"75–90 min",dom:"25–30 min"};
 var ICO={sab:'<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="14" cy="4.5" r="2"/><path d="M8 21l3-6 3 2 2 4M11 15l-1-4 4-2 3 3h3M8 11l2-3"/></svg>',dom:'<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>'};
 function todayKey(){var map=["dom","seg","ter","qua","qui","sex","sab"];return map[new Date().getDay()]}
 function dayName(k){var d=DAYS[k];return d?d.name:(k==="sab"?"Atlético 1":"Atlético 2")}
@@ -528,8 +531,8 @@ function viewVisao(){
     DAYKEYS.forEach(function(k){
       var d=DAYS[k],sub,dur=d?"60–75 min":DUR[k];
       if(d){sub=(d.focus?d.focus+" · ":"")+"Aeróbico: "+d.cardio}
-      else if(k==="sab"){sub="Barra, paralelas, abdômen e corrida"}
-      else{sub="Tiros"}
+      else if(k==="sab"){sub="Desafio de barra, paralelas, abdômen e cardio"}
+      else{sub="Tiros na bike"}
       var ok=isDone(week,k),num=pad(DAYKEYS.indexOf(k)+1);
       h+='<a class="drow'+(ok?' isdone':'')+'" href="#'+k+'"><span class="sq'+(ok?' ok':'')+'">'+(ok?'<svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="Feito"><path d="M5 12.5l4.5 4.5L19 7"/></svg>':'<span class="ab">'+num+'</span>')+'</span><span class="dt"><span class="dn">'+dayName(k)+'</span><span class="dm">'+(ok&&durTxt(sget(doneKey(week,k)))?'Feito em '+durTxt(sget(doneKey(week,k))):dur)+'</span><span class="ds">'+sub+'</span></span></a>';
     });
@@ -565,21 +568,21 @@ function viewDay(day){
   }else if(day==="sab"){
     h+=dayHead(day,i,{name:"Atlético 1",focus:""})+'<div class="exs">';
     var forte=week>=3;
-    SAB.forEach(function(it,ix){h+=exercise(it,ix,week,day,true)});
-    h+='<article class="card ex exg"><div class="ex-head"><span class="no">'+pad(SAB.length+1)+'</span><h3 class="nm">Corrida contínua</h3></div><div class="ex-meta"><span class="sr">30–40 min</span><span class="tag mute">ritmo de conversa</span>'+(forte?'<span class="tag">últimos 5 min fortes</span>':'')+'</div>'+
-     '<p class="note">'+(forte?'Nesta semana, os últimos 5 min em ritmo forte.':'A partir da S3, os últimos 5 min em ritmo forte.')+'</p>'+
-     '<div class="log">'+exCheck(week,"sab",1,1,"Corrida contínua")+'</div></article>';
-    h+='<article class="card ex exg"><div class="ex-head"><span class="no">'+pad(SAB.length+2)+'</span><h3 class="nm">Mobilidade longa</h3></div><div class="ex-meta"><span class="sr">2 × ~20 min</span></div>'+
+    var sabList=(week===2||week===8)?[TESTE].concat(SAB):SAB;
+    sabList.forEach(function(it,ix){h+=exercise(it,ix,week,day,true)});
+    h+='<article class="card ex exg"><div class="ex-head"><span class="no">'+pad(sabList.length+1)+'</span><h3 class="nm">Cardio em 3 aparelhos</h3></div><div class="ex-meta"><span class="sr">30 min</span><span class="tag mute">ritmo de conversa</span>'+(forte?'<span class="tag">últimos 5 min fortes</span>':'')+'</div>'+
+     '<p class="note">10 min de bike, 10 de caminhada inclinada, 10 de elíptico. Troca de aparelho sem parar. '+(forte?'Nesta semana, os últimos 5 min fortes no elíptico.':'A partir da S3, os últimos 5 min fortes no elíptico.')+'</p>'+
+     '<div class="log">'+exCheck(week,"sab",1,1,"Cardio em 3 aparelhos")+'</div></article>';
+    h+='<article class="card ex exg"><div class="ex-head"><span class="no">'+pad(sabList.length+2)+'</span><h3 class="nm">Mobilidade longa</h3></div><div class="ex-meta"><span class="sr">2 × ~20 min</span></div>'+
      '<p class="note">Rotina de flexibilidade 2 vezes. Veja a aba <a class="gold" href="#flex">Flex</a>.</p>'+
      '<div class="log">'+exCheck(week,"sab",2,2,"Mobilidade longa")+'</div></article></div>'+feitoBlock(day);
   }else{
     var T=tirosFor(week);
     h+=dayHead(day,i,{name:"Atlético 2",focus:""});
-    h+='<div class="sel"><div class="opt'+(T.bike?" cur":"")+'"><span class="label">Semanas ímpares'+(T.bike?" · esta semana":"")+'</span><div class="t">Bike</div><div class="d">8 × 30 s fortes, 90 s leves.</div></div>'+
-       '<div class="opt'+(!T.bike?" cur":"")+'"><span class="label">Semanas pares'+(!T.bike?" · esta semana":"")+'</span><div class="t">Esteira</div><div class="d">6 × 1 min forte, 2 min caminhando. Só em linha reta.</div></div></div>';
-    h+='<article class="card ex"><span class="label">S'+week+' · '+(T.bike?"bike":"esteira")+'</span><div class="tiros" style="margin-top:10px">'+T.n+' <span class="dim" style="font-size:18px;letter-spacing:0">tiros</span></div>'+
-     '<p class="note" style="margin-left:0">Um tiro a mais por semana. Na S5 volta à base.</p>'+
-     '<div class="log" style="margin-left:0">'+exCheck(week,"dom",1,T.n,"Tiros")+'</div></article>';
+    h+='<div class="sel"><div class="opt cur"><span class="label">Toda semana · só bike</span><div class="t">1 rodada = 4 min</div><div class="d">8 tiros de 20 s no máximo, com 10 s parado entre eles. Entre uma rodada e outra, 3 min pedalando leve.</div></div></div>';
+    h+='<article class="card ex"><span class="label">S'+week+' · bike</span><div class="tiros" style="margin-top:10px">'+T.n+' <span class="dim" style="font-size:18px;letter-spacing:0">'+(T.n===1?"rodada":"rodadas")+'</span></div>'+
+     '<p class="note" style="margin-left:0">S1 a S3: 2 rodadas. S4 em diante: 3. Na S5, semana leve: 1. Antes, 5 min de bike leve; depois, mais 5. Se o joelho incomodar, menos carga na bike e mais giro.</p>'+
+     '<div class="log" style="margin-left:0">'+exCheck(week,"dom",1,T.n,"Rodadas de tiros")+'</div></article>';
     h+='<p class="after"><b>Depois</b>rotina de <a href="#flex">flexibilidade</a>.</p>'+feitoBlock(day);
   }
   return h;
